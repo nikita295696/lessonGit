@@ -7,6 +7,7 @@ include_once "models/Button.php";
 include_once "models/Text.php";
 include_once "models/Label.php";
 
+// Конвертирует Control в HTML разметку
 function convertToHTML(Control $control){
 
     switch (true){
