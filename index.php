@@ -9,16 +9,16 @@ include_once "models/Label.php";
 
 // Конвертирует Control в HTML разметку
 function convertToHTML(Control $control){
-
-    switch (true){
-        case $control instanceof Button:
-            return "Button <br/>" . $control->render();
-        case $control instanceof Text:
-            return "Text <br/>" . $control->render();
-        case $control instanceof Label:
-            return $control->render();
-    }
-
+    //Проверка на наследования от родителя
+    switch(true) {
+        case  $control instanceof Button:
+            return  "Button <br/>" . $control->render();
+        case  $control instanceof Text:
+            return  "Text <br/>" . $control->render();
+        case $control  instanceof Label:
+            return  $control->render();
+    } 
+ 
     // вернет имя класса
 //    $className = get_class($control);
 //    switch ($className){
