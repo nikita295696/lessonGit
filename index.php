@@ -1,34 +1,51 @@
 <?php
 
-include_once "models/IRenderTag.php";
-include_once "models/Control.php";
-include_once "models/Input.php";
-include_once "models/Button.php";
-include_once "models/Text.php";
-include_once "models/Label.php";
+include "models/IRenderForm.php";
+include "models/IFormPost.php";
+include "models/Product.php";
+include "models/BaseForm.php";
+include "widgets/FormAdd.php";
+include "models/ProductsRepository.php";
+include "widgets/ListProducts.php";
+include "widgets/FormSearch.php";
+include "models/ProductPhone.php";
+include "models/ProductMonitor.php";
 
-// Конвертирует Control в HTML разметку
-function convertToHTML(Control $control){
-    // вернет имя класса
-    $className = get_class($control);
-    switch ($className){
-        case "Text":
-            return "Text <br/>" . $control->render();
-        case "Button":
-            return "Button <br/>" . $control->render();
-        case "Label":
-            return "Button <br/>" . $control->render();
-    }
 
-    return "";
+// Получаем продукты из файла
+ProductsRepository::readFileJSON();
+
+
+/***********    Формируем форму добавления товаров    ************/
+$form = new FormAdd();
+if(count($_POST)){
+    $form->post();;
 }
 
-$button = new Button("red", 200, 300, "btn", "val", true);
-$text = new Text("none", 450, 150, "search", "", "Search");
-$label = new Label("yellow", 200, 300, $button);
 
-echo convertToHTML($button);
-echo convertToHTML($text);
-echo convertToHTML($label);
+/***********    Формируем список товаров    ************/
+$list = new ListProducts(ProductsRepository::getArrayProducts());
 
-// comment
+
+/***********    Формируем форму поиска    ************/
+$list2 = new FormSearch();
+
+
+$output = [
+    $form,
+    $list,
+    $list2
+];
+
+foreach ($output as $tag){
+    if($tag instanceof BaseForm){
+        $tag->post();
+        echo $tag->render();
+    }
+}
+
+
+
+$arrayProducts = ProductsRepository::getArrayProducts();
+
+var_dump( min(array_column($arrayProducts, "_price")));

@@ -1,5 +1,7 @@
 <?php
 
-interface IRenderTag {
+
+interface IRenderForm
+{
     function render();
 }
