@@ -41,7 +41,7 @@ class Folder {
 
         if(!empty($this->name) && !file_exists($fileAndPath)){
             mkdir($fileAndPath);
-        } else if(file_exists($fileAndPath)) {
+        } else if(file_exists($fileAndPath) && !empty($this->name) ) {
             throw new Exception("Папка " . $this->name . " уже существует");
         }
 
