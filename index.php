@@ -31,7 +31,7 @@ $setFolder->createFolder();
 if(isset($_GET['folder'])) {
     $_SESSION['folder'] = $currentFolder . "/" . $_GET['folder'];
     $_SESSION['folder'] = realpath($_SESSION['folder']);
-//    header("Location: index.php");
+   header("Location: index.php");
 }
 
 chdir($currentFolder);
