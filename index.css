@@ -112,6 +112,7 @@ button {
 
 .row {
   display: flex;
+  row-gap: 1rem;
 }
 
 .column {
