@@ -20,6 +20,8 @@
 session_start();
 $currentFolder = $_SESSION['folder'] ?? realpath('uploads');
 
+$msg = "";
+
 include "models/Folder.php";
 try {
 $setFolder = new Folder($_POST['folder_name'] ?? "", $currentFolder);
@@ -27,7 +29,7 @@ $setFolder->setFolder();
 $setFolder->createFolder();
 } 
 catch(Exception $ex) {
-    echo $ex->getMessage();
+    $msg = $ex->getMessage();
 }
 
 if(isset($_GET['folder'])) {
@@ -54,7 +56,7 @@ if(count($files) > 0) {
 
             move_uploaded_file($tmpName, $fileName);
         } catch(Exception $exception) {
-            echo $exception->getMessage();
+            $msg = $exception->getMessage();
         }
     }
 }
@@ -104,8 +106,8 @@ if(count($files) > 0) {
 
     </div>
 
-    <div class="toast show" data-toast='toast'>
-        ERROR ERROR ERROR ERROR ERROR ERROR
+    <div class="toast <?= !empty($msg) ? "show" : ""?>" data-toast='toast'>
+        <?= $msg?>
     </div>
 
     <script>
