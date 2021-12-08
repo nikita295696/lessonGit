@@ -105,6 +105,11 @@ button {
   }
 }
 
+.content {
+  width: 80vw;
+  margin: auto;
+}
+
 .row {
   display: flex;
 }
@@ -217,7 +222,7 @@ input:checked + label:after {
 }
 
 body {
-  padding: 5rem 10vw;
+  padding: 5rem 0;
   background-color: #252525;
 }
 body input, body button {
@@ -237,9 +242,18 @@ body input:hover, body input:focus, body button:hover, body button:focus {
 body input:hover, body button:hover {
   box-shadow: 0 0 0.5rem #00ADB5, inset 0 0 0.5rem #00ADB5;
 }
+body input {
+  width: 20rem;
+}
+body button {
+  width: 10rem;
+}
 body form {
   margin: auto;
   padding: 2rem;
+}
+body img {
+  width: 10rem;
 }
 
 /*# sourceMappingURL=style.css.map */
