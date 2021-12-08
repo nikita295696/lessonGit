@@ -19,7 +19,6 @@
 <?php
 session_start();
 $currentFolder = $_SESSION['folder'] ?? realpath('uploads');
-var_dump($currentFolder);
 
 include "models/Folder.php";
 
