@@ -19,20 +19,18 @@
 <?php
 session_start();
 $currentFolder = $_SESSION['folder'] ?? realpath('uploads');
-var_dump($currentFolder);
 
 include "models/Folder.php";
-
-$setFolder = new Folder($_POST['folder_name'] ?? "");
-$setFolder->setFolder();
-$setFolder->createFolder();
-
 
 if(isset($_GET['folder'])) {
     $_SESSION['folder'] = $currentFolder . "/" . $_GET['folder'];
     $_SESSION['folder'] = realpath($_SESSION['folder']);
    header("Location: index.php");
 }
+
+$setFolder = new Folder($_POST['folder_name'] ?? "");
+$setFolder->setFolder();
+$setFolder->createFolder();
 
 chdir($currentFolder);
 

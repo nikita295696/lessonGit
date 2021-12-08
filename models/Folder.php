@@ -35,7 +35,6 @@ class Folder {
         $showFolders = [];
         $showFolders = json_decode(file_get_contents('folders.json'), true);
 
-        var_dump($this->name);
         if(!empty($this->name) && !file_exists("uploads/$this->name")){
             mkdir("uploads/$this->name");
         }
