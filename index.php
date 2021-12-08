@@ -31,6 +31,10 @@
             <input type="file" name="files" multiple>
             <button type="submit">Upload</button>
         </form>
+
+        <div class="gallery row">
+            
+        </div>
     </div>
 
     <script src="./services/validation.js"></script>
