@@ -70,7 +70,7 @@ if(count($files) > 0) {
             </form>
 
             <form name="upload" method="post" enctype="multipart/form-data">
-                <input type="file" name="files" multiple>
+                <input type="file" name="files[]" multiple>
                 <button type="submit">Upload</button>
             </form>
         </div>
