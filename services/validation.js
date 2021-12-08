@@ -1,27 +1,19 @@
-/*document.onsubmit = function (event) {
-    event.preventDefault();
-}*/
-
-document.forms.create.onsubmit = function ({ target }) {
-    if (target.folder_name.value.length < 3)
-        target.folder_name.style.border = 'solid 0.15rem red';
-    else {
-        // location.reload();
-    }
+document.forms.create.onsubmit = function (event) {
+    if (event.target.folder_name.value.length < 3){
+        event.target.folder_name.style.border = 'solid 0.15rem red';
+        event.preventDefault();
+    }   
 }
 
 
-document.forms.upload.onsubmit = function ({ target }) {
+document.forms.upload.onsubmit = function (event) {
     let formData = new FormData();
-    let file = target.files.files[0];
+    let file = event.target.files.files[0];
     formData.append("Filedata", file);
     let t = file.type.split('/').pop().toLowerCase();
 
     if (t != "jpeg" && t != "jpg" && t != "png" && t != "bmp" && t != "gif") {
-        target.files.style.border = 'solid 0.15rem red';
-        document.getElementById(id).value = '';
-        return false;
+        event.target.files.style.border = 'solid 0.15rem red';
+        event.preventDefault();
     }
-
-    // location.reload();
 }

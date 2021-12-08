@@ -38,24 +38,63 @@ if(isset($_GET['folder'])) {
 
 chdir($currentFolder);
 
+$files = $_FILES['files'] ?? [];
+
+if(count($files) > 0) {
+    $countFile = count($files["name"]);
+
+    for($i = 0; $i < $countFile; $i++) {
+        try {
+            $fileName = $files["name"][$i];
+            $tmpName = $files["tmp_name"][$i];
+
+            if(file_exists($fileName)) {
+                throw new Exception("This file exist");
+            }
+
+            move_uploaded_file($tmpName, $fileName);
+        } catch(Exception $exception) {
+            echo $exception->getMessage();
+        }
+    }
+}
+
 ?>
 
     <div class="content">
 
-        <form name="create" id="create_folder" method="post">
-            <input type="text" name="folder_name" placeholder="Folder Name">
-            <button type="submit">Create folder</button>
-        </form>
+        <div class="row between">
+            <form name="create" id="create_folder" method="post">
+                <input type="text" name="folder_name" placeholder="Folder Name">
+                <button type="submit">Create folder</button>
+            </form>
+
+            <form name="upload" method="post" enctype="multipart/form-data">
+                <input type="file" name="files" multiple>
+                <button type="submit">Upload</button>
+            </form>
+        </div>
 
         <div class="gallery row">
             <ul>
                 <?php
-                foreach(scandir($currentFolder) as $item) {
-                    if($item !== '.' && $item !== '.gitignore' && !(basename($currentFolder) === 'uploads' && $item === '..')) {
-                        if(is_dir($item)) {
-                            ?> <li><a href="?folder=<?= $item ?>"><?= $item ?></a></li> <?php
+                foreach (scandir($currentFolder) as $item) {
+                    if ($item !== '.' && $item !== '.gitignore' && !(basename($currentFolder) === 'uploads' && $item === '..')) {
+                        if (is_dir($item)) {
+                ?>
+                            <li class="folder">
+                                <a href="?folder=<?= $item ?>">
+                                    <?= $item ?>
+                                </a>
+                            </li>
+                        <?php
                         } else {
-                            ?> <li><a href="#" download="<?= $item ?>"><?= $item ?></a></li> <?php
+                        ?>
+                            <li class="file">
+                                <a href="#" download="<?= $item ?>"><?= $item ?>
+                                </a>
+                            </li>
+                <?php
                         }
                     }
                 }
@@ -63,12 +102,17 @@ chdir($currentFolder);
             </ul>
         </div>
 
-        <form name="upload" method="post" enctype="multipart/form-data">
-            <input type="file" name="files" multiple>
-            <button type="submit">Upload</button>
-        </form>
-
     </div>
+
+    <div class="toast show" data-toast='toast'>
+        ERROR ERROR ERROR ERROR ERROR ERROR
+    </div>
+
+    <script>
+        setTimeout(() => {
+            document.querySelector('.toast.show').classList.remove('show')
+        }, 3000);
+    </script>
 
     <script src="./services/validation.js"></script>
 </body>
