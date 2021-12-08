@@ -37,16 +37,13 @@ class Folder {
         $showFolders = [];
         $showFolders = json_decode(file_get_contents('folders.json'), true);
 
-        if(!empty($this->name) && !file_exists("$this->path/$this->name")){
-            mkdir("$this->path/$this->name");
+        $fileAndPath = "$this->path/$this->name";
+
+        if(!empty($this->name) && !file_exists($fileAndPath)){
+            mkdir($fileAndPath);
+        } else if(file_exists($fileAndPath)) {
+            throw new Exception("Папка " . $this->name . " уже существует");
         }
 
-//        if(!is_dir("uploads/$this->name")) {
-//            mkdir("uploads/$this->name");
-//        }
-
-        /*foreach($showFolders as $folder) {
-            echo "<li>" . "<a href='uploads/".$folder['name']."'>" . $folder['name'] . "</a>" . "</li>";
-        }*/
     }
 }

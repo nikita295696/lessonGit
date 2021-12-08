@@ -21,10 +21,14 @@ session_start();
 $currentFolder = $_SESSION['folder'] ?? realpath('uploads');
 
 include "models/Folder.php";
-
+try {
 $setFolder = new Folder($_POST['folder_name'] ?? "", $currentFolder);
 $setFolder->setFolder();
 $setFolder->createFolder();
+} 
+catch(Exception $ex) {
+    echo $ex->getMessage();
+}
 
 
 if(isset($_GET['folder'])) {
