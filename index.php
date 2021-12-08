@@ -1,4 +1,4 @@
-!<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,8 +15,15 @@
 </form>
 
 <ul>
-    <li><a href="#">Folder 1</a> </li>
-    <li><a href="#">File</a> </li>
+
+    <?php include "models/Folder.php";
+        $setFolder = new Folder($_POST['folder_name'] ?? "");
+        $setFolder->setFolder();
+        echo $setFolder->createFolder();
+    ?>
+
+    <!-- <li><a href="#">Folder 1</a> </li>
+    <li><a href="#">File</a> </li> -->
 </ul>
 
 <form method="post" enctype="multipart/form-data">
@@ -26,3 +33,6 @@
 
 </body>
 </html>
+
+
+
