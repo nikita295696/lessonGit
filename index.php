@@ -34,6 +34,27 @@ $setFolder->createFolder();
 
 chdir($currentFolder);
 
+$files = $_FILES['files'] ?? [];
+
+if(count($files) > 0) {
+    $countFile = count($files["name"]);
+
+    for($i = 0; $i < $countFile; $i++) {
+        try {
+            $fileName = $files["name"][$i];
+            $tmpName = $files["tmp_name"][$i];
+
+            if(file_exists($fileName)) {
+                throw new Exception("This file exist");
+            }
+
+            move_uploaded_file($tmpName, $fileName);
+        } catch(Exception $exception) {
+            echo $exception->getMessage();
+        }
+    }
+}
+
 ?>
 
     <div class="content">
@@ -60,7 +81,7 @@ chdir($currentFolder);
         </div>
 
         <form name="upload" method="post" enctype="multipart/form-data">
-            <input type="file" name="files" multiple>
+            <input type="file" name="files[]" multiple>
             <button type="submit">Upload</button>
         </form>
 
